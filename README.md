@@ -8,9 +8,9 @@ on the memory management side of things as well as pointer arithmetic.
 This application was intended to be a sort of 'halo project', where I sort out the
 functionality for loading models, then implement them elsewhere in other games/projects of mine.
 
-Features:
+**Features:**
 - Skybox
 - Camera system
 - Loading models without crashing (most of the time)
 
-Logiiq.
+***Logiiq.***
