@@ -65,7 +65,7 @@ Shader_t shader;
 Camera_t cam;
 
 // Scene objects
-//Model_t *scene;
+Model_t *scene;
 Cube_t c;
 
 static const char *modelPath;
@@ -130,16 +130,15 @@ void init(void)
 inline void initScene(void)
 {
 	skybox_setfull("texture/skybox/full.jpg");
-	c = cube_new(0.0f, 0.0f, 0.0f);
+	//c = cube_new(0.0f, 0.0f, 0.0f);
 
-	//scene = scene_load(modelPath, &numMeshes);
+	scene = scene_load(modelPath, &numMeshes);
+	printf("here\n");
 
-	/*
 	if (!scene)
 	{
 		printf("ERROR: Scene could not load");
 	}
-	*/
 }
 
 void loop(void)
@@ -148,13 +147,14 @@ void loop(void)
 	
 	while (!glfwWindowShouldClose(window))
 	{
+		glClearColor(0.0f, 0.2f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		camera_update(&cam, &shader);
 
-		skybox_draw(&cam);
+		//skybox_draw(&cam);
 
-		cube_draw(&c, &shader);
-		//scene_draw(scene, numMeshes);
+		//cube_draw(&c, &shader);
+		scene_draw(scene, numMeshes, &shader);
 		
 		glfwSwapBuffers(window);
 		glfwPollEvents();

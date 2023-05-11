@@ -25,6 +25,9 @@
     <Filter Include="Resource Files\3D models">
       <UniqueIdentifier>{27234f22-82ac-4013-bc7c-3928094880c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lighting">
+      <UniqueIdentifier>{86a4929c-a448-4fda-989a-005c6ceddffe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.c">
@@ -57,6 +60,15 @@
     <ClCompile Include="Skybox.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lighting\DirectionalLight.c">
+      <Filter>Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="lighting\LightManager.c">
+      <Filter>Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="lighting\PointLight.c">
+      <Filter>Lighting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -85,6 +97,15 @@
     </ClInclude>
     <ClInclude Include="Skybox.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lighting\DirectionalLight.h">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="lighting\LightManager.h">
+      <Filter>Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="lighting\PointLight.h">
+      <Filter>Lighting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

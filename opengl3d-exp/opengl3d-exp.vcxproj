@@ -149,6 +149,9 @@
     <ClCompile Include="Game.c" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Input.c" />
+    <ClCompile Include="lighting\DirectionalLight.c" />
+    <ClCompile Include="lighting\LightManager.c" />
+    <ClCompile Include="lighting\PointLight.c" />
     <ClCompile Include="Scene.c" />
     <ClCompile Include="Shader.c" />
     <ClCompile Include="Skybox.c" />
@@ -159,6 +162,9 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="lighting\DirectionalLight.h" />
+    <ClInclude Include="lighting\LightManager.h" />
+    <ClInclude Include="lighting\PointLight.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Skybox.h" />

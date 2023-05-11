@@ -25,7 +25,7 @@ Mesh_t scene_process_mesh(struct aiMesh *mesh, const struct aiScene *scene)
 	unsigned int numVerts = mesh->mNumVertices;
 	unsigned int numIndices = mesh->mNumFaces * 3; // It's always number of faces * 3 because we triangulate each face
 
-	size_t vertexSize = sizeof(float) * 5 * numVerts;
+	size_t vertexSize = sizeof(float) * 8 * numVerts;
 	size_t indicesSize = sizeof(unsigned int) * numIndices;
 
 	Vertex_t *data = malloc(vertexSize);
@@ -42,6 +42,11 @@ Mesh_t scene_process_mesh(struct aiMesh *mesh, const struct aiScene *scene)
 			data[i].pos[0] = mesh->mVertices[i].x;
 			data[i].pos[1] = mesh->mVertices[i].y;
 			data[i].pos[2] = mesh->mVertices[i].z;
+
+			data[i].norm[0] = mesh->mNormals[i].x;
+			data[i].norm[0] = mesh->mNormals[i].y;
+			data[i].norm[0] = mesh->mNormals[i].z;
+
 			data[i].tex[0] = mesh->mTextureCoords[0][i].x;
 			data[i].tex[1] = mesh->mTextureCoords[0][i].y;
 		}
@@ -117,17 +122,21 @@ Model_t scene_setup_mesh(const Mesh_t *mesh)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->indicesSize * sizeof(unsigned int), &mesh->indices[0], GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void *)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void *)0);
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void *)(sizeof(float) * 3));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void *)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void *)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
 
 	Model_t tmp = { {0.0f, 0.0f, 0.0f}, {0.0f}, VAO, mesh->indicesSize };
 	glm_mat4_identity(&tmp.transform[0]);
@@ -224,19 +233,19 @@ void mesh_free(Mesh_t *meshes, unsigned int size)
 	}
 }
 
-void scene_draw(Model_t *m, unsigned int size)
+void scene_draw(Model_t *m, unsigned int size, Shader_t *shader)
 {
 	for (unsigned int i = 0; i < size; i++, m++)
 	{
-		glm_translate(&m->transform[0], m->position);
+		glm_translate(m->transform, m->position);
 
-		shader_set_model(getShader(), &m->transform[0]);
-		shader_mul(getShader());
+		shader_set_model(shader, m->transform);
+		shader_mul(shader);
 
 		glBindVertexArray(m->VAO);
 		glDrawElements(GL_TRIANGLES, m->size, GL_UNSIGNED_INT, 0);
 
-		glm_mat4_identity(getShader()->model);
-		glm_mat4_identity(&m->transform[0]);
+		glm_mat4_identity(shader->model);
+		glm_mat4_identity(m->transform);
 	}
 }

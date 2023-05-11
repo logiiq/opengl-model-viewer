@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include <cglm/cglm.h>
+#include "Shader.h"
 
 // TODO: process all meshes in the scene
 // Put each individual mesh from the scene in its own VAO
@@ -16,6 +17,7 @@
 typedef struct Vertex
 {
 	vec3 pos;
+	vec3 norm;
 	vec2 tex;
 } Vertex_t;
 
@@ -37,6 +39,6 @@ typedef struct Model
 
 Model_t *scene_load(const char *fpath, unsigned int *nrMeshes);
 
-void scene_draw(Model_t *models, unsigned int size);
+void scene_draw(Model_t *models, unsigned int size, Shader_t *shader);
 
 #endif
